@@ -1,58 +1,83 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+    <div :id="randomId">
+        {{ name }}
+        {{ randomId + 100 }}
+        {{ animals[0] }}
+        {{ name.split('').reverse().join('').toUpperCase() }}
+        {{ Math.floor(randomId) % 2 === 0 ? 'Deljiv' : 'Nije deljiv' }}
+
+        <div v-if="name === 'Marina' ">
+            Hello, {{ name }}.
+        </div>
+
+        <div v-else>
+            Hi.
+        </div>
+
+        <div v-show="name !== 'Marina' ">
+            Hello, {{ name }}
+        </div>
+
+        <div @click="name = 'Pera'">Click me.</div>
+
+        <button v-on:click="handleClick">Click me!</button>
+
+        <a :href="link">Link</a>
+
+        <form @submit.prevent="handleSubmit">
+            <button type="submit">Submit</button>
+        </form>
+
+        <div :class="{ 'blue': isBlue }">
+            Blue
+        </div>
+
+        <ul>
+            <li v-for="(color, index) in colors" :key="color">
+                {{ color }} - {{ index }}
+            </li>
+        </ul>
+
+        <input type="text" v-model="name"/>
+
+        <input type="text" v-model="ime"/>
+        <button @click="naKlik">Greet!</button>
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  data() {
+    return {
+      ime: "",
+      name: "Marina",
+      randomId: Math.random(),
+      animals: ["dog", "cat"],
+      link: "https://www.google.rs/",
+      isBlue: true,
+      colors: ["red", "green", "blue"]
+    };
+  },
+
+  methods: {
+    naKlik() {
+      alert(`Hello, ${this.ime}`);
+    },
+
+    handleClick(event) {
+      console.log("clicked", event);
+    },
+
+    handleSubmit(event) {
+      //   event.preventDefault();
+      console.log("submitted");
+    }
   }
-}
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+<style>
+.blue {
+  background-color: blue;
 }
 </style>
